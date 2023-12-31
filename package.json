@@ -7,7 +7,7 @@
     "clear": "rimraf ./dist/",
     "build": "npm run clear && tsc -p ./tsconfig.json && cp package.json package-lock.json dist/",
     "test:cli": "npx ts-mocha -p ./tsconfig.json src/cli/test/*.test.ts",
-    "dev:cli": "npx tsnd --respawn --cls src/cli/main.ts"
+    "dev:cli": "tsc -w"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,6 @@
     "mocha": "^10.2.0",
     "rimraf": "^5.0.5",
     "ts-mocha": "^10.0.0",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
   }
 }
