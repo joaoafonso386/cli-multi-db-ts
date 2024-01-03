@@ -1,5 +1,5 @@
-import { Hero } from "cli/types/types";
 import { readFile, writeFile } from "fs/promises"
+import { Hero } from "../types/types"
 
 export class HeroesDB {
     private HEROS_DATA = `${__dirname}/heros.json`;
@@ -10,9 +10,14 @@ export class HeroesDB {
         return hero
     }
 
-    async readHeroesFile(): Promise<Hero[]>{
-        const data = await readFile(this.HEROS_DATA, 'utf8');
-        return JSON.parse(data)
+    async readHeroesFile(): Promise<Hero[]> {
+        try {
+            const data = await readFile(this.HEROS_DATA, 'utf8');
+            return JSON.parse(data)
+        } catch (e) {
+            console.log(e)
+            return []
+        }
     }
 
     async createHero({ id, ...restOfHero }: Hero){
@@ -24,7 +29,7 @@ export class HeroesDB {
                 ...restOfHero
             }
             const allNewHeros = [...allHeros, newHero]
-            await writeFile(this.HEROS_DATA, JSON.stringify(allNewHeros))
+            await writeFile(this.HEROS_DATA, JSON.stringify(allNewHeros), {flag: 'r+'})
             return true
         } catch (e) {
             console.log(e);

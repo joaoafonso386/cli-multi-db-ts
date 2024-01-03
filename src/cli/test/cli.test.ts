@@ -1,6 +1,6 @@
 import { deepStrictEqual, ok } from "assert";
 import { HeroesDB } from "../db/db";
-import { Hero } from "cli/types/types";
+import { Hero } from "../types/types";
 import { before } from "mocha";
 
 
