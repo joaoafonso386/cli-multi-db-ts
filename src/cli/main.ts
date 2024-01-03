@@ -1,3 +1,5 @@
 import { HeroesDB } from "./db/db";
 
-console.log(new HeroesDB())
+const db = new HeroesDB()
+
+// db.createHero({ id: 6, power: "Speed", name: "Batman"}).then((data) => console.log(data))
