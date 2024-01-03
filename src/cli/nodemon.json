@@ -1,0 +1,11 @@
+{
+    "restartable": "rs",
+    "verbose": true,
+    "execMap": {
+        "ts": "tsc -w && node --inspect -r ts-node/register"
+    },
+    "watch": [
+        "./, ./**"
+    ],
+    "ext": "ts,json"
+}

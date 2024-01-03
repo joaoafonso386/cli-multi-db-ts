@@ -14,6 +14,6 @@ describe("Manipulate Heroes", () => {
     it("Should register a hero", () => {
         const expected = DEF_ITEMS
 
-        // ok(null, expected)
+        ok(null, undefined)
     })
 }) 
