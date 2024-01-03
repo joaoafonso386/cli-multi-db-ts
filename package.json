@@ -2,6 +2,7 @@
   "name": "node-life-api",
   "version": "1.0.0",
   "description": "",
+  "main": "./dist/main.js",
   "scripts": {
     "clear": "rimraf ./dist/",
     "build": "npm run clear && tsc -p ./tsconfig.json && cp package.json package-lock.json dist/ && cp src/cli/db/heros.json dist/cli/db",
