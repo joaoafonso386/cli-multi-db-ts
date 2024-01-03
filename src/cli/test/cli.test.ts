@@ -1,4 +1,4 @@
-import { deepStrictEqual, ok } from "assert";
+import { deepStrictEqual } from "assert";
 import { HeroesDB } from "../db/db";
 import { Hero } from "../types/types";
 import { before } from "mocha";
@@ -23,8 +23,12 @@ describe("Manipulate Heroes", () => {
     })
     it("Should register a hero", async () => {
         const expected = HERO
-        const registerHero = await db.createHero(HERO)
         const [flash] = await db.getHeros(HERO.id)
         deepStrictEqual(flash, expected)
+    })
+    it("Should remove a hero", async () => {
+        const expected = true
+        const removedHero = await db.removeHero(HERO.id)
+        deepStrictEqual(removedHero, expected)
     })
 }) 

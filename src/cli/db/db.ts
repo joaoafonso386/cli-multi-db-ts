@@ -20,21 +20,34 @@ export class HeroesDB {
         }
     }
 
-    async createHero({ id, ...restOfHero }: Hero){
+    async writeHerosFile(herosArr: Hero[]) {
         try {
-            const allHeros = await this.getHeros()
-            const heroId = id <= 2 ? id : Date.now()
-            const newHero: Hero = {
-                id: heroId,
-                ...restOfHero
-            }
-            const allNewHeros = [...allHeros, newHero]
-            await writeFile(this.HEROS_DATA, JSON.stringify(allNewHeros), {flag: 'r+'})
+            await writeFile(this.HEROS_DATA, JSON.stringify(herosArr))
             return true
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
-        
+    }
+
+    async createHero({ id, ...restOfHero }: Hero){
+        const allHeros = await this.getHeros()
+        const heroId = id <= 2 ? id : Date.now()
+        const newHero: Hero = {
+            id: heroId,
+            ...restOfHero
+        }
+        const allNewHeros = [...allHeros, newHero]
+        this.writeHerosFile(allNewHeros)
+        return true
+    }
+
+    async removeHero(id?: Hero["id"]) {
+        if(!id) {
+            return await this.writeHerosFile([])
+        }
+        const allHeros = await this.getHeros()
+        const newHeroes = allHeros.filter((hero) => hero.id !== id)
+        return await this.writeHerosFile(newHeroes)
     }
 
 }
