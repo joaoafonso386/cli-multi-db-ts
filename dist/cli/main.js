@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = require("./db/db");
-const db = new db_1.HeroesDB();
-// db.createHero({ id: 6, power: "Speed", name: "Batman"}).then((data) => console.log(data))
+const commander_1 = require("commander");
+async function main() {
+    const cli = new commander_1.Command();
+    cli.version('v1').parse(process.argv);
+}
+main();
