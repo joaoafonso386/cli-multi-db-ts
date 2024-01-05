@@ -3,3 +3,5 @@ export type Hero = {
     name: string,
     power: string
 }
+
+export type HeroID = Hero['id']

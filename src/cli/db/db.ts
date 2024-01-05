@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "fs/promises"
-import { Hero } from "../types/types"
+import { Hero, HeroID } from "../types/types"
 
 export class HeroesDB {
     private HEROS_DATA = `${__dirname}/heros.json`;
@@ -37,17 +37,35 @@ export class HeroesDB {
             ...restOfHero
         }
         const allNewHeros = [...allHeros, newHero]
-        this.writeHerosFile(allNewHeros)
-        return true
+        return this.writeHerosFile(allNewHeros)
     }
 
-    async removeHero(id?: Hero["id"]) {
+    async removeHero(id?: HeroID ) {
         if(!id) {
             return await this.writeHerosFile([])
         }
-        const allHeros = await this.getHeros()
-        const newHeroes = allHeros.filter((hero) => hero.id !== id)
+        const heros = await this.getHeros()
+        const heroExists = heros.findIndex((hero) => hero.id === id)
+        if(heroExists < 0) {
+            throw new Error("Hero does not exist!")
+        }
+        const newHeroes = heros.filter((hero) => hero.id !== id)
         return await this.writeHerosFile(newHeroes)
+    }
+
+    async updateHero(id: HeroID, updated: Pick<Hero, 'name' | 'power'>) {
+        const heros = await this.getHeros()
+        const heroExists = heros.findIndex((hero) => hero.id === id)
+        if(heroExists < 0) {
+            throw new Error("Hero does not exist!")
+        }
+        const updatedHeros = heros.map((hero) => {
+            if(hero.id === id) {
+                return { ...hero, ...updated }
+            }
+            return hero
+        })
+        return await this.writeHerosFile(updatedHeros)
     }
 
 }
