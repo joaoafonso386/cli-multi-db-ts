@@ -7,7 +7,8 @@
     "clear": "rimraf ./dist/",
     "build": "npm run clear && tsc -p ./tsconfig.json && cp package.json package-lock.json dist/ && cp src/cli/db/heros.json dist/cli/db",
     "test:cli": "npx ts-mocha -p ./tsconfig.json src/cli/test/*",
-    "dev:cli": "npx nodemon src/cli/main.ts --config src/cli/nodemon.json"
+    "dev:cli": "npx nodemon src/cli/main.ts --config src/cli/nodemon.json",
+    "cli": "npx ts-node src/cli/main.ts"
   },
   "keywords": [],
   "author": "",

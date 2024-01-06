@@ -10,30 +10,19 @@ class HeroesDB {
         return hero;
     }
     async readHeroesFile() {
-        try {
-            const data = await (0, promises_1.readFile)(this.HEROS_DATA, 'utf8');
-            return JSON.parse(data);
-        }
-        catch (e) {
-            console.log(e);
-            return [];
-        }
+        const data = await (0, promises_1.readFile)(this.HEROS_DATA, "utf8");
+        return JSON.parse(data);
     }
     async writeHerosFile(herosArr) {
-        try {
-            await (0, promises_1.writeFile)(this.HEROS_DATA, JSON.stringify(herosArr));
-            return true;
-        }
-        catch (e) {
-            console.log(e);
-        }
+        await (0, promises_1.writeFile)(this.HEROS_DATA, JSON.stringify(herosArr));
+        return true;
     }
     async createHero({ id, ...restOfHero }) {
         const allHeros = await this.getHeros();
         const heroId = id <= 2 ? id : Date.now();
         const newHero = {
             id: heroId,
-            ...restOfHero
+            ...restOfHero,
         };
         const allNewHeros = [...allHeros, newHero];
         return this.writeHerosFile(allNewHeros);
