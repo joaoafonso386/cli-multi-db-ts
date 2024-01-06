@@ -8,7 +8,7 @@ const main = async () => {
       .version('v1')
       .option('-l, --list', 'List all heros')
       .option('-rm, --remove [value]', 'Delete a hero by id or pass nothing to remove all heroes')
-      .option('-up, --update [value]', 'Update a hero by id - use -n and -p to add new values')
+      .option('-up, --update [value]', 'Update a hero by id - use -n and -p to add new values (both mandatory)')
       .option('-r, --register', 'Define that you will be registering a hero')
       .option('-n, --name [value]', 'Name of the hero to register')
       .option('-p, --power [value]', 'Power of the hero to register')

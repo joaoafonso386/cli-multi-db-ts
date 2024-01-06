@@ -8,7 +8,8 @@
     "build": "npm run clear && tsc -p ./tsconfig.json && cp package.json package-lock.json dist/ && cp src/cli/db/heros.json dist/cli/db",
     "test:cli": "npx ts-mocha -p ./tsconfig.json src/cli/test/*",
     "dev:cli": "npx nodemon src/cli/main.ts --config src/cli/nodemon.json",
-    "cli": "npx ts-node src/cli/main.ts"
+    "cli": "npx ts-node src/cli/main.ts",
+    "dev:db": "npx tsx --watch-path=src/multi-db/ src/multi-db/main.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "rimraf": "^5.0.5",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
