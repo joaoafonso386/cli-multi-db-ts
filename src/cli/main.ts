@@ -8,6 +8,7 @@ const main = async () => {
       .version('v1')
       .option('-l, --list', 'List all heros')
       .option('-r, --register', 'Define that you will be registering a hero')
+      .option('-rm, --remove [value]', 'Delete a hero by id')
       .option('-n, --name [value]', 'Hero name')
       .option('-p, --power [value]', 'Heros Power')
       .parse(process.argv)
@@ -24,6 +25,7 @@ const main = async () => {
             return
          }
          console.log('Hero successfully registered')
+         return
       }
 
       if(list) {
@@ -31,6 +33,15 @@ const main = async () => {
          console.log(heros)
          return
       }
+
+      if(remove) {
+         const id = parseInt(remove)
+         const deletedHero = await db.removeHero(id)
+         console.log(`It is ${deletedHero} that your hero has been removed!`)
+         return
+      }
+
+      console.log(cli.opts())
 
 
    } catch(e) {
