@@ -5,6 +5,10 @@ export class NotImplementedException extends Error {
 }
 
 export class Crud {
+    isConnected(){
+        throw new NotImplementedException() 
+    }
+
     create(item: unknown){
         throw new NotImplementedException()
     }

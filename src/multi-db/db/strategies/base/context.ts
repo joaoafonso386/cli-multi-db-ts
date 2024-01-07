@@ -1,11 +1,17 @@
+import { MongoDB } from "../mongodb"
+import { Postgres } from "../postgres"
 import { Crud } from "./crud"
 
-export class ContextStrategy extends Crud {
-    private _db: any
+export class Context extends Crud {
+    private _db
 
-    constructor(strategy: unknown) {
+    constructor(strategy: Postgres | MongoDB) {
         super()
         this._db = strategy
+    }
+
+    async isConnected(){
+        return await this._db.isConnected() 
     }
 
     create(item: unknown) {
