@@ -1,0 +1,18 @@
+version: '1.0'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo_local
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - 27017:27017
+    
+  mongoclient:
+    image: mongoclient/mongoclient
+    container_name: mongoclient
+    ports:
+      - 3000:3000

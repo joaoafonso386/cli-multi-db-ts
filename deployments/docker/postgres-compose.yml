@@ -1,0 +1,19 @@
+version: '1.0'
+
+services:
+
+  db:
+    image: postgres
+    container_name: postgres_local
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: example
+      POSTGRES_DB: heroes
+    ports:
+      - "5432:5432"
+  
+  admin:
+    image: adminer
+    container_name: adminer
+    ports:
+    - "8080:8080"
