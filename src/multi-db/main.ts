@@ -1,8 +1,10 @@
-const leftPad = (word: string, space: number) => {
-    return `${' '.repeat(space)}${word}`
-}
+import { ContextStrategy } from './db/strategies/base/context';
+import { Postgres } from './db/strategies/postgres';
+import { MongoDB } from './db/strategies/mongodb';
 
+const contextMongo = new ContextStrategy(new MongoDB())
+contextMongo.create(1)
+const contextPostgres = new ContextStrategy(new Postgres())
+contextPostgres.create(1)
 
-const res = leftPad("val", 60)
-
-console.log(res)
+// contextMongo.read()
