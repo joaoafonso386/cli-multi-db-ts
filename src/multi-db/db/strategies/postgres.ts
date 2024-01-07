@@ -1,14 +1,21 @@
-import { DataTypes, Model, ModelCtor, Sequelize } from "sequelize";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model, ModelCtor, ModelStatic, Sequelize } from "sequelize";
 import { Crud } from "./base/crud";
+
+export interface HeroModel extends Model<InferAttributes<HeroModel>, InferCreationAttributes<HeroModel>> {
+    id: number;
+    name: string;
+    power: string;
+}
+
+export type Hero = Pick<HeroModel, 'name' | 'power'>
 
 export class Postgres extends Crud {
 
     private sequelize: Sequelize;
-    private heroes: ModelCtor<Model<any, any>>
+    private heroes: ModelStatic<any>;
 
     constructor() {
         super()
-        this.connect()
     }
 
     async isConnected() {
@@ -22,7 +29,7 @@ export class Postgres extends Crud {
     }
 
     async defineModel() {
-        this.heroes = this.sequelize.define('heroes', {
+        this.heroes = this.sequelize.define<HeroModel>('heroes', {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -43,7 +50,7 @@ export class Postgres extends Crud {
         await this.heroes.sync()
     }
 
-    private connect() {
+    async connect() {
        this.sequelize = new Sequelize(
             'heroes',
             'example',
@@ -57,9 +64,11 @@ export class Postgres extends Crud {
                 }
             }
         )
+        await this.defineModel()
     }
 
-    create(item: unknown) {
-        console.log("item saved in postgres db");  
+    async create(item: Hero) {
+        const { dataValues } = await this.heroes.create(item)
+        return dataValues
     }
 }

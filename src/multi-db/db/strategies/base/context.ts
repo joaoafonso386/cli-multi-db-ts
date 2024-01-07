@@ -1,11 +1,11 @@
 import { MongoDB } from "../mongodb"
-import { Postgres } from "../postgres"
+import { Hero, Postgres } from "../postgres"
 import { Crud } from "./crud"
 
 export class Context extends Crud {
     private _db
 
-    constructor(strategy: Postgres | MongoDB) {
+    constructor(strategy: Postgres) {
         super()
         this._db = strategy
     }
@@ -14,7 +14,11 @@ export class Context extends Crud {
         return await this._db.isConnected() 
     }
 
-    create(item: unknown) {
+    async connect() {
+        return await this._db.connect()
+    }
+
+    create(item: Hero) {
         return this._db.create(item)
     }
 
