@@ -4,15 +4,11 @@ exports.Postgres = void 0;
 const sequelize_1 = require("sequelize");
 const crud_1 = require("./base/crud");
 class Postgres extends crud_1.Crud {
-    driver;
+    sequelize;
     heroes;
-    constructor() {
-        super();
-        this.connect();
-    }
     async isConnected() {
         try {
-            await this.driver.authenticate();
+            await this.sequelize.authenticate();
             return true;
         }
         catch (e) {
@@ -20,8 +16,8 @@ class Postgres extends crud_1.Crud {
             return false;
         }
     }
-    defineModel() {
-        this.heroes = this.driver.define('heroes', {
+    async defineModel() {
+        this.heroes = this.sequelize.define('heroes', {
             id: {
                 type: sequelize_1.DataTypes.INTEGER,
                 primaryKey: true,
@@ -38,17 +34,26 @@ class Postgres extends crud_1.Crud {
             freezeTableName: false,
             timestamps: false
         });
+        await this.heroes.sync();
     }
-    connect() {
-        this.driver = new sequelize_1.Sequelize('heroes', 'example', 'example', {
+    async connect() {
+        this.sequelize = new sequelize_1.Sequelize('heroes', 'example', 'example', {
             host: 'localhost',
             dialect: 'postgres',
             quoteIdentifiers: false,
             operatorsAliases: {}
         });
+        await this.defineModel();
     }
-    create(item) {
-        console.log("item saved in postgres db");
+    async create(item) {
+        const { dataValues } = await this.heroes.create(item);
+        return dataValues;
+    }
+    async read(item) {
+        return await this.heroes.findAll({ where: item, raw: true });
+    }
+    async update(id, item) {
+        return await this.heroes.update(item, { where: { id: id } });
     }
 }
 exports.Postgres = Postgres;
