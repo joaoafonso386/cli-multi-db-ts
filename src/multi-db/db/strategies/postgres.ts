@@ -68,7 +68,11 @@ export class Postgres extends Crud {
         return dataValues
     }
 
-    async read(item: Pick<Hero, "name">) {
+    async read(item: Pick<Hero, "name"> | { id: number }) {
         return await this.heroes.findAll({ where: item, raw: true })
+    }
+
+    async update(id: number, item: Hero) {
+        return await this.heroes.update(item, {where: { id: id }})
     }
 }

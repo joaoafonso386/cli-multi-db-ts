@@ -8,11 +8,16 @@ const HERO = {
     name: 'Arc',
     power: 'Arrow'
 }
+const HERO_UPDATE = {
+    name: 'Batman',
+    power: 'Night Shift'
+}
 
 describe('Post Strategy', () => {
 
     before(async () => {
         await context.connect()
+        await context.create(HERO_UPDATE)
     })
 
     it('Postgres connection', async () => {
@@ -34,6 +39,17 @@ describe('Post Strategy', () => {
             power
         } 
         assert.deepEqual(valToAssert, HERO)
+    })
+    it('Should update a hero', async () => {
+        const [heroToUpdate] = await context.read({ name: HERO_UPDATE.name })
+        const newHero = {
+            ...HERO_UPDATE,
+            name: 'Wonder Woman'
+        }
+        const [affected] = await context.update(heroToUpdate.id, newHero)
+        const [heroUpdated] = await context.read({ id: heroToUpdate.id })
+        assert.deepEqual(affected, 1)
+        assert.deepEqual(heroUpdated.name, newHero.name)
     })
 
 }).timeout(Infinity)

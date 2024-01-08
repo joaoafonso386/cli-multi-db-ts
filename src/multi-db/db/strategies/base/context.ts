@@ -22,10 +22,10 @@ export class Context extends Crud {
         return this._db.create(item)
     }
 
-    read(item: Pick<Hero, "name">) {
+    read(item: Pick<Hero, "name"> | { id: number }) {
         return this._db.read(item)
     }
-    update(id: number, item: unknown) {
+    update(id: number, item: Hero) {
         return this._db.update(id, item)
     }
 
