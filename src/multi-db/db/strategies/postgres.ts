@@ -14,10 +14,6 @@ export class Postgres extends Crud {
     private sequelize: Sequelize;
     private heroes: ModelStatic<any>;
 
-    constructor() {
-        super()
-    }
-
     async isConnected() {
         try {
             await this.sequelize.authenticate()
@@ -70,5 +66,9 @@ export class Postgres extends Crud {
     async create(item: Hero) {
         const { dataValues } = await this.heroes.create(item)
         return dataValues
+    }
+
+    async read(item: Pick<Hero, "name">) {
+        return await this.heroes.findAll({ where: item, raw: true })
     }
 }

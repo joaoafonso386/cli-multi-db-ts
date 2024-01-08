@@ -19,12 +19,20 @@ describe('Post Strategy', () => {
         const res = await context.isConnected()
         assert.deepEqual(res, true)
     })
-    it('Should Register a hero', async () => {
+    it('Should register a hero', async () => {
         const { name, power } = await context.create(HERO)
         const valToAssert = {
             name,
             power
         }
+        assert.deepEqual(valToAssert, HERO)
+    })
+    it('Should list all heros', async () => {
+        const [{ name, power }] = await context.read({ name: HERO.name })
+        const valToAssert = {
+            name,
+            power
+        } 
         assert.deepEqual(valToAssert, HERO)
     })
 
