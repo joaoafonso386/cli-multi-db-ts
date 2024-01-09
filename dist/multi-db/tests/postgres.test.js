@@ -19,6 +19,7 @@ const HERO_UPDATE = {
 (0, mocha_1.describe)('Post Strategy', () => {
     (0, mocha_1.before)(async () => {
         await context.connect();
+        await context.delete();
         await context.create(HERO_UPDATE);
     });
     it('Postgres connection', async () => {
@@ -47,9 +48,14 @@ const HERO_UPDATE = {
             ...HERO_UPDATE,
             name: 'Wonder Woman'
         };
-        const [affected] = await context.update(heroToUpdate.id, newHero);
-        const [heroUpdated] = await context.read({ id: heroToUpdate.id });
+        const [affected] = await context.update(heroToUpdate.id ?? 0, newHero);
+        const [heroUpdated] = await context.read({ id: heroToUpdate.id ?? 0 });
         assert_1.default.deepEqual(affected, 1);
         assert_1.default.deepEqual(heroUpdated.name, newHero.name);
+    });
+    it("Should delete a hero by id", async () => {
+        const [hero] = await context.read();
+        const res = await context.delete(hero.id);
+        assert_1.default.deepEqual(res, 1);
     });
 }).timeout(Infinity);

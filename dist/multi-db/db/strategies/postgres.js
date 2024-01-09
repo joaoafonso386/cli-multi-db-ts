@@ -55,5 +55,9 @@ class Postgres extends crud_1.Crud {
     async update(id, item) {
         return await this.heroes.update(item, { where: { id: id } });
     }
+    async delete(id) {
+        const queryParams = id ? { id } : {};
+        return await this.heroes.destroy({ where: queryParams });
+    }
 }
 exports.Postgres = Postgres;

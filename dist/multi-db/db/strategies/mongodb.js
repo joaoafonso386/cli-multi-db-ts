@@ -9,5 +9,8 @@ class MongoDB extends crud_1.Crud {
     create(item) {
         console.log("item saved in mongodb db");
     }
+    connect() {
+        return;
+    }
 }
 exports.MongoDB = MongoDB;
