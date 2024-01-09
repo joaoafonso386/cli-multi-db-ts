@@ -2,6 +2,7 @@ import assert from "assert";
 import { Context } from './../db/strategies/base/context';
 import { Postgres } from './../db/strategies/postgres';
 import { before, describe } from "mocha";
+import { Hero } from "multi-db/db/types/types";
 
 const context = new Context(new Postgres())
 const HERO = {
@@ -17,6 +18,7 @@ describe('Post Strategy', () => {
 
     before(async () => {
         await context.connect()
+        await context.delete()
         await context.create(HERO_UPDATE)
     })
 
@@ -50,6 +52,11 @@ describe('Post Strategy', () => {
         const [heroUpdated] = await context.read({ id: heroToUpdate.id })
         assert.deepEqual(affected, 1)
         assert.deepEqual(heroUpdated.name, newHero.name)
+    })
+    it("Should delete a hero by id", async () => {
+        const [hero] = await context.read()
+        const res = await context.delete(hero.id)
+        assert.deepEqual(res, 1)
     })
 
 }).timeout(Infinity)

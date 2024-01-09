@@ -1,6 +1,6 @@
-import { MongoDB } from "../mongodb"
-import { Hero, Postgres } from "../postgres"
+import { Postgres } from "../postgres"
 import { Crud } from "./crud"
+import { Hero, HeroReadOptions } from "multi-db/db/types/types"
 
 export class Context extends Crud {
     private _db
@@ -22,14 +22,14 @@ export class Context extends Crud {
         return this._db.create(item)
     }
 
-    read(item: Pick<Hero, "name"> | { id: number }) {
+    read(item?: HeroReadOptions) {
         return this._db.read(item)
     }
     update(id: number, item: Hero) {
         return this._db.update(id, item)
     }
 
-    delete(id: number) {
+    delete(id?: number) {
         return this._db.delete(id)
     }
 

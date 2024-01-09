@@ -1,13 +1,9 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, ModelCtor, ModelStatic, Sequelize } from "sequelize";
+import { DataTypes, ModelStatic, Sequelize } from "sequelize";
 import { Crud } from "./base/crud";
+import { HeroModel, Hero } from "multi-db/db/types/types";
 
-export interface HeroModel extends Model<InferAttributes<HeroModel>, InferCreationAttributes<HeroModel>> {
-    id: number;
-    name: string;
-    power: string;
-}
 
-export type Hero = Pick<HeroModel, 'name' | 'power'>
+
 
 export class Postgres extends Crud {
 
@@ -68,11 +64,17 @@ export class Postgres extends Crud {
         return dataValues
     }
 
-    async read(item: Pick<Hero, "name"> | { id: number }) {
+    async read(item?: Pick<Hero, "name"> | { id: number }) {
         return await this.heroes.findAll({ where: item, raw: true })
     }
 
     async update(id: number, item: Hero) {
         return await this.heroes.update(item, {where: { id: id }})
     }
+
+    async delete(id?: number) {
+        const queryParams = id ? { id } : {}
+        return await this.heroes.destroy({ where: queryParams})
+    } 
+
 }
