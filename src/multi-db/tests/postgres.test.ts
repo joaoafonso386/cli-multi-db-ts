@@ -35,7 +35,7 @@ describe('Post Strategy', () => {
         assert.deepEqual(valToAssert, HERO)
     })
     it('Should list all heros', async () => {
-        const [{ name, power }] = await context.read({ name: HERO.name })
+        const [{ name, power }] = await context.read({ name: HERO.name }) as Hero[]
         const valToAssert = {
             name,
             power
@@ -43,18 +43,18 @@ describe('Post Strategy', () => {
         assert.deepEqual(valToAssert, HERO)
     })
     it('Should update a hero', async () => {
-        const [heroToUpdate] = await context.read({ name: HERO_UPDATE.name })
+        const [heroToUpdate] = await context.read({ name: HERO_UPDATE.name }) as any[]
         const newHero = {
             ...HERO_UPDATE,
             name: 'Wonder Woman'
         }
-        const [affected] = await context.update(heroToUpdate.id, newHero)
-        const [heroUpdated] = await context.read({ id: heroToUpdate.id })
+        const [affected] = await context.update(heroToUpdate.id, newHero) as number[]
+        const [heroUpdated] = await context.read({ id: heroToUpdate.id }) as Hero[]
         assert.deepEqual(affected, 1)
         assert.deepEqual(heroUpdated.name, newHero.name)
     })
     it("Should delete a hero by id", async () => {
-        const [hero] = await context.read()
+        const [hero] = await context.read() as any[]
         const res = await context.delete(hero.id)
         assert.deepEqual(res, 1)
     })

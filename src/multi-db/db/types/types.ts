@@ -6,7 +6,7 @@ export interface HeroModel extends Model<InferAttributes<HeroModel>, InferCreati
     power: string;
 }
 
-export type Hero = Pick<HeroModel, 'name' | 'power'>
+export type Hero = Pick<HeroModel, 'name' | 'power'> 
 
 export type HeroReadOptions = Pick<Hero, "name"> | { id: number }
 

@@ -9,4 +9,8 @@ export class MongoDB extends Crud {
         console.log("item saved in mongodb db");
         
     }
+
+    connect() {
+        return
+    }
 }
