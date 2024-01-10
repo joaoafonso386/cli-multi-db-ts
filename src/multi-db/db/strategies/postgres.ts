@@ -1,6 +1,6 @@
 import { DataTypes, ModelStatic, Sequelize } from "sequelize";
 import { Crud } from "./base/crud";
-import { HeroModel, Hero } from "multi-db/db/types/types";
+import { HeroModel, Hero } from "multi-db/db/types/postgres.types";
 
 
 

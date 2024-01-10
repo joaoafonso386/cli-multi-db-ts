@@ -9,6 +9,10 @@ export class Crud {
         throw new NotImplementedException() 
     }
 
+    connect() {
+        throw new NotImplementedException() 
+    }
+
     create(item: unknown){
         throw new NotImplementedException()
     }

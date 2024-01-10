@@ -1,3 +1,3 @@
-import { Postgres } from "./db/strategies/postgres";
+import { MongoDB } from './db/strategies/mongodb';
 
-console.log(new Postgres())
+console.log(new MongoDB().isConnected())

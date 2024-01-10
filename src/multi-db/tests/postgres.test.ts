@@ -2,7 +2,7 @@ import assert from "assert";
 import { Context } from './../db/strategies/base/context';
 import { Postgres } from './../db/strategies/postgres';
 import { before, describe } from "mocha";
-import { Hero } from "multi-db/db/types/types";
+import { Hero } from "multi-db/db/types/postgres.types";
 
 const context = new Context(new Postgres())
 const HERO = {
