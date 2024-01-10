@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 export type Hero = {
     name: string;
     power: string;
-    insertedAt: string;
+    insertedAt?: string;
   }
   
 export const heroSchema = new Schema<Hero>({

@@ -2,11 +2,12 @@ import { Hero, heroSchema } from "../types/mongo.types";
 import { Crud } from "./base/crud";
 import { connect, model } from "mongoose";
 export class MongoDB extends Crud {
-    private heroes: any;
+    private model = model<Hero>('Heroes', heroSchema)
  
-    create(item: unknown) {
-        console.log("item saved in mongodb db");
-        
+    async create(item: Hero) {
+        const hero = new this.model(item)
+        await hero.save();
+        return hero
     }
 
     async isConnected() {
@@ -24,7 +25,4 @@ export class MongoDB extends Crud {
             .then(() => console.log("Connected to MongoDB!"))
     }   
 
-    model() {
-        this.heroes = model<Hero>('Heroes', heroSchema)
-    }
 }
