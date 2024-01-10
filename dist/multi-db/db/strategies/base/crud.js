@@ -11,6 +11,9 @@ class Crud {
     isConnected() {
         throw new NotImplementedException();
     }
+    connect() {
+        throw new NotImplementedException();
+    }
     create(item) {
         throw new NotImplementedException();
     }

@@ -14,7 +14,7 @@ class Context extends crud_1.Crud {
     async connect() {
         return await this._db.connect();
     }
-    create(item) {
+    async create(item) {
         return this._db.create(item);
     }
     read(item) {

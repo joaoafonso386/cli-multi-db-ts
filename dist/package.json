@@ -10,7 +10,7 @@
     "dev:cli": "npx nodemon src/cli/main.ts --config src/cli/nodemon.json",
     "cli": "npx ts-node src/cli/main.ts",
     "dev:db": "npx tsx --watch-path=src/multi-db/ src/multi-db/main.ts",
-    "test:db": "npx ts-mocha -p ./tsconfig.json src/multi-db/tests/*"
+    "test:db": "npx ts-mocha -p ./tsconfig.json"
   },
   "keywords": [],
   "author": "",
