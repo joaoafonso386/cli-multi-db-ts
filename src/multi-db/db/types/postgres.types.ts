@@ -8,5 +8,3 @@ export interface HeroModel extends Model<InferAttributes<HeroModel>, InferCreati
 
 export type Hero = Pick<HeroModel, 'name' | 'power'> & { id?: number }
 
-export type HeroReadOptions = Pick<Hero, "name"> | { id: number }
-

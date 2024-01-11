@@ -1,6 +1,7 @@
 import { DataTypes, ModelStatic, Sequelize } from "sequelize";
 import { Crud } from "./base/crud";
 import { HeroModel, Hero } from "multi-db/db/types/postgres.types";
+import { HeroReadOptions } from "../types/types";
 
 
 
@@ -64,7 +65,7 @@ export class Postgres extends Crud {
         return dataValues
     }
 
-    async read(item?: Pick<Hero, "name"> | { id: number }) {
+    async read(item?: HeroReadOptions) {
         return await this.heroes.findAll({ where: item, raw: true })
     }
 
