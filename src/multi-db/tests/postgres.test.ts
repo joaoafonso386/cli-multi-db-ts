@@ -54,7 +54,7 @@ describe('Post Strategy', () => {
         assert.deepEqual(heroUpdated.name, newHero.name)
     })
     it("Should delete a hero by id", async () => {
-        const [hero] = await context.read() as any[]
+        const [hero] = await context.read({} as Hero) 
         const res = await context.delete(hero.id)
         assert.deepEqual(res, 1)
     })

@@ -1,4 +1,5 @@
 import { Hero, heroSchema } from "../types/mongo.types";
+import { HeroReadOptions } from "../types/types";
 import { Crud } from "./base/crud";
 import { connect, model } from "mongoose";
 export class MongoDB extends Crud {
@@ -11,6 +12,7 @@ export class MongoDB extends Crud {
     }
 
     async isConnected() {
+        //1 for success connection, 0 for error
         try {
             await this.connect()
             return 1
@@ -24,5 +26,9 @@ export class MongoDB extends Crud {
         return await connect('mongodb://zigoto:zigoto@127.0.0.1:27017/heroes')
             .then(() => console.log("Connected to MongoDB!"))
     }   
+
+    read(item: HeroReadOptions, limit = 10) {
+        return this.model.find(item, undefined).limit(limit)
+    }
 
 }
