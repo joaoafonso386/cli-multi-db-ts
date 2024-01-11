@@ -12,6 +12,7 @@ class MongoDB extends crud_1.Crud {
         return hero;
     }
     async isConnected() {
+        //1 for success connection, 0 for error
         try {
             await this.connect();
             return 1;
@@ -24,6 +25,9 @@ class MongoDB extends crud_1.Crud {
     async connect() {
         return await (0, mongoose_1.connect)('mongodb://zigoto:zigoto@127.0.0.1:27017/heroes')
             .then(() => console.log("Connected to MongoDB!"));
+    }
+    read(item, limit = 10) {
+        return this.model.find(item, undefined).limit(limit);
     }
 }
 exports.MongoDB = MongoDB;

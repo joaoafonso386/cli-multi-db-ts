@@ -54,7 +54,7 @@ const HERO_UPDATE = {
         assert_1.default.deepEqual(heroUpdated.name, newHero.name);
     });
     it("Should delete a hero by id", async () => {
-        const [hero] = await context.read();
+        const [hero] = await context.read({});
         const res = await context.delete(hero.id);
         assert_1.default.deepEqual(res, 1);
     });
