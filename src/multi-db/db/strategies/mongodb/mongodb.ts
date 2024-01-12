@@ -1,12 +1,17 @@
-import { Hero, heroSchema } from "../types/mongo.types";
-import { HeroReadOptions } from "../types/types";
-import { Crud } from "./base/crud";
-import { connect, model, disconnect } from "mongoose";
+import { Hero } from "../../types/mongo.types";
+import { HeroReadOptions } from "../../types/types";
+import { Crud } from "../base/crud";
+import { connect, model, disconnect, Schema } from "mongoose";
 export class MongoDB extends Crud {
-    private model = model<Hero>('Heroes', heroSchema)
+    private schema
+
+    constructor(private connection: string, schema: Schema, schemaName: string) {
+        super()
+        this.schema = model(schemaName, schema)
+    }
  
     async create(item: Hero) {
-        const hero = new this.model(item)
+        const hero = new this.schema(item)
         await hero.save();
         return hero
     }
@@ -23,20 +28,20 @@ export class MongoDB extends Crud {
     }
 
     async connect() {
-        return await connect('mongodb://zigoto:zigoto@127.0.0.1:27017/heroes')
+        return await connect(this.connection)
             .then(() => console.log("Connected to MongoDB!"))
     }   
 
     async read(item: HeroReadOptions, limit = 10) {
-        return this.model.find(item, undefined).limit(limit)
+        return this.schema.find(item, undefined).limit(limit)
     }
 
     async update(id: string | number, item: Hero) {
-        return this.model.updateOne({_id: id}, { $set: item })
+        return this.schema.updateOne({_id: id}, { $set: item })
     }
 
     async delete(id: string) {
-        return this.model.deleteOne({ _id: id })
+        return this.schema.deleteOne({ _id: id })
     }
 
     close() {

@@ -1,9 +1,10 @@
-import { MongoDB } from "./../db/strategies/mongodb";
-import { Context } from "./../db/strategies/base/context";
-import { before } from "mocha";
 import assert from 'assert';
+import { MongoDB } from "../db/strategies/mongodb/mongodb";
+import { Context } from "./../db/strategies/base/context";
+import { heroSchema } from "../db/strategies/mongodb/schemas";
+import { before } from "mocha";
 
-const context = new Context(new MongoDB())
+const context = new Context(new MongoDB("mongodb://zigoto:zigoto@127.0.0.1:27017/heroes", heroSchema, "Heroes"))
 
 const HERO_MOCK = {
     name: 'Batman from tests',
@@ -23,7 +24,6 @@ const HERO_MOCK_UPDATE = {
 let HERO_MOCK_UPDATE_ID: string;
 
 describe("MongoDB test suite", () => {
-
     before(async () => {
         await context.connect()
         await context.create(HERO_MOCK_DEFAULT)
