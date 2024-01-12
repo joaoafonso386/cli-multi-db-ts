@@ -21,7 +21,7 @@ export class Crud {
         throw new NotImplementedException()
     }
 
-    update(id: number, item: unknown) {
+    update(id: number | string, item: unknown) {
         throw new NotImplementedException()
     }
 

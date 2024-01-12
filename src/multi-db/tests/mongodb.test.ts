@@ -15,12 +15,23 @@ const HERO_MOCK_DEFAULT = {
     power: "Light"
 }
 
+const HERO_MOCK_UPDATE = {
+    name: `Green Lantern From tests`,
+    power: "Lantern"
+}
+
+let HERO_MOCK_UPDATE_ID: string;
+
 describe("MongoDB test suite", () => {
 
     before(async () => {
         await context.connect()
         await context.create(HERO_MOCK_DEFAULT)
+        const { _id } = await context.create(HERO_MOCK_UPDATE)
+        HERO_MOCK_UPDATE_ID = _id
     })
+
+    after(() => context.close())
 
     it("Test connection", async () => {
         const res = await context.isConnected()
@@ -36,5 +47,10 @@ describe("MongoDB test suite", () => {
     it("Should list heroes", async () => {
         const [{ name, power }] = await context.read({ name: HERO_MOCK_DEFAULT.name }, 5)
         assert.deepStrictEqual({ name, power }, HERO_MOCK_DEFAULT)
+    })
+    it("Should update a heroe", async () => {
+        const { modifiedCount }: any = await context.update(HERO_MOCK_UPDATE_ID, { name: 'Green Lantern Updated From tests'})
+
+        assert.deepStrictEqual(modifiedCount, 1)
     })
 })

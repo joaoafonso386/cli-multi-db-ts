@@ -2,7 +2,7 @@ import { MongoDB } from "../mongodb"
 import { Postgres } from "../postgres"
 import { Crud } from "./crud"
 import { Hero as PostgresHero } from "multi-db/db/types/postgres.types"
-import { Hero, Hero as MongoHero } from "multi-db/db/types/mongo.types"
+import { Hero as MongoHero } from "multi-db/db/types/mongo.types"
 import { HeroReadOptions } from "multi-db/db/types/types"
 
 export class Context extends Crud {
@@ -28,12 +28,16 @@ export class Context extends Crud {
     read(item: HeroReadOptions , limit?: number) {
         return this._db.read(item, limit)
     }
-    update(id: number, item: PostgresHero) {
+    update(id: number | string, item: PostgresHero | MongoHero) {
         return this._db.update(id, item)
     }
 
     delete(id?: number) {
         return this._db.delete(id)
+    }
+
+    close() {
+        return this._db.close()
     }
 
 }

@@ -69,7 +69,7 @@ export class Postgres extends Crud {
         return await this.heroes.findAll({ where: item, raw: true })
     }
 
-    async update(id: number, item: Hero) {
+    async update(id: number | string, item: Hero) {
         return await this.heroes.update(item, {where: { id: id }})
     }
 
@@ -77,5 +77,9 @@ export class Postgres extends Crud {
         const queryParams = id ? { id } : {}
         return await this.heroes.destroy({ where: queryParams})
     } 
+
+    close(){
+        return
+    }
 
 }

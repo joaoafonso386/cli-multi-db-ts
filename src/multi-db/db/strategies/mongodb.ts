@@ -1,7 +1,7 @@
 import { Hero, heroSchema } from "../types/mongo.types";
 import { HeroReadOptions } from "../types/types";
 import { Crud } from "./base/crud";
-import { connect, model } from "mongoose";
+import { connect, model, disconnect } from "mongoose";
 export class MongoDB extends Crud {
     private model = model<Hero>('Heroes', heroSchema)
  
@@ -29,6 +29,14 @@ export class MongoDB extends Crud {
 
     read(item: HeroReadOptions, limit = 10) {
         return this.model.find(item, undefined).limit(limit)
+    }
+
+    update(id: string | number, item: Hero) {
+        return this.model.updateOne({_id: id}, { $set: item })
+    }
+
+    close() {
+        return disconnect()
     }
 
 }
