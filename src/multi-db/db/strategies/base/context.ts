@@ -32,7 +32,8 @@ export class Context extends Crud {
         return this._db.update(id, item)
     }
 
-    delete(id?: number) {
+    delete(id?: number | string) {
+        //@ts-ignore next - reason: ts assumes types never for id here
         return this._db.delete(id)
     }
 

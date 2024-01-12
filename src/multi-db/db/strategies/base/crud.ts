@@ -25,7 +25,7 @@ export class Crud {
         throw new NotImplementedException()
     }
 
-    delete(id?: number) {
+    delete(id?: number | string) {
         throw new NotImplementedException()
     }
 }

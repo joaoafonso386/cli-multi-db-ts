@@ -27,12 +27,16 @@ export class MongoDB extends Crud {
             .then(() => console.log("Connected to MongoDB!"))
     }   
 
-    read(item: HeroReadOptions, limit = 10) {
+    async read(item: HeroReadOptions, limit = 10) {
         return this.model.find(item, undefined).limit(limit)
     }
 
-    update(id: string | number, item: Hero) {
+    async update(id: string | number, item: Hero) {
         return this.model.updateOne({_id: id}, { $set: item })
+    }
+
+    async delete(id: string) {
+        return this.model.deleteOne({ _id: id })
     }
 
     close() {
