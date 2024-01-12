@@ -59,5 +59,8 @@ class Postgres extends crud_1.Crud {
         const queryParams = id ? { id } : {};
         return await this.heroes.destroy({ where: queryParams });
     }
+    close() {
+        return;
+    }
 }
 exports.Postgres = Postgres;

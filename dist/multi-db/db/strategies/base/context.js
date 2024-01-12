@@ -26,5 +26,8 @@ class Context extends crud_1.Crud {
     delete(id) {
         return this._db.delete(id);
     }
+    close() {
+        return this._db.close();
+    }
 }
 exports.Context = Context;

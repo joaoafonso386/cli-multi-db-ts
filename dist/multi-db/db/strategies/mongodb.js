@@ -29,5 +29,11 @@ class MongoDB extends crud_1.Crud {
     read(item, limit = 10) {
         return this.model.find(item, undefined).limit(limit);
     }
+    update(id, item) {
+        return this.model.updateOne({ _id: id }, { $set: item });
+    }
+    close() {
+        return (0, mongoose_1.disconnect)();
+    }
 }
 exports.MongoDB = MongoDB;
