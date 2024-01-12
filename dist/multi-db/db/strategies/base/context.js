@@ -24,6 +24,7 @@ class Context extends crud_1.Crud {
         return this._db.update(id, item);
     }
     delete(id) {
+        //@ts-ignore next - reason: ts assumes types never for id here
         return this._db.delete(id);
     }
     close() {

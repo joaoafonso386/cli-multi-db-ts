@@ -26,11 +26,14 @@ class MongoDB extends crud_1.Crud {
         return await (0, mongoose_1.connect)('mongodb://zigoto:zigoto@127.0.0.1:27017/heroes')
             .then(() => console.log("Connected to MongoDB!"));
     }
-    read(item, limit = 10) {
+    async read(item, limit = 10) {
         return this.model.find(item, undefined).limit(limit);
     }
-    update(id, item) {
+    async update(id, item) {
         return this.model.updateOne({ _id: id }, { $set: item });
+    }
+    async delete(id) {
+        return this.model.deleteOne({ _id: id });
     }
     close() {
         return (0, mongoose_1.disconnect)();

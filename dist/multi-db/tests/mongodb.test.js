@@ -45,4 +45,8 @@ describe("MongoDB test suite", () => {
         const { modifiedCount } = await context.update(HERO_MOCK_UPDATE_ID, { name: 'Green Lantern Updated From tests' });
         assert_1.default.deepStrictEqual(modifiedCount, 1);
     });
+    it("Should remove a heroe", async () => {
+        const { deletedCount } = await context.delete(HERO_MOCK_UPDATE_ID);
+        assert_1.default.deepStrictEqual(deletedCount, 1);
+    });
 });
