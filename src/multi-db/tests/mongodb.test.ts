@@ -1,10 +1,14 @@
+import dotenv from "dotenv"
 import assert from 'assert';
+import path from "path";
 import { MongoDB } from "../db/strategies/mongodb/mongodb";
 import { Context } from "./../db/strategies/base/context";
 import { heroSchema } from "../db/strategies/mongodb/schemas";
 import { before } from "mocha";
+dotenv.config({ path: path.join(__dirname, '../..', '.env') });
 
-const context = new Context(new MongoDB("mongodb://zigoto:zigoto@127.0.0.1:27017/heroes", heroSchema, "Heroes"))
+const connectionString = process.env.MONGO_CONNECTION_STRING ?? ""
+const context = new Context(new MongoDB(connectionString, heroSchema, "Heroes"))
 
 const HERO_MOCK = {
     name: 'Batman from tests',
