@@ -1,13 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MongoDB = void 0;
-const mongo_types_1 = require("../types/mongo.types");
-const crud_1 = require("./base/crud");
+const crud_1 = require("../base/crud");
 const mongoose_1 = require("mongoose");
 class MongoDB extends crud_1.Crud {
-    model = (0, mongoose_1.model)('Heroes', mongo_types_1.heroSchema);
+    connection;
+    schema;
+    constructor(connection, schema, schemaName) {
+        super();
+        this.connection = connection;
+        this.schema = (0, mongoose_1.model)(schemaName, schema);
+    }
     async create(item) {
-        const hero = new this.model(item);
+        const hero = new this.schema(item);
         await hero.save();
         return hero;
     }
@@ -23,17 +28,17 @@ class MongoDB extends crud_1.Crud {
         }
     }
     async connect() {
-        return await (0, mongoose_1.connect)('mongodb://zigoto:zigoto@127.0.0.1:27017/heroes')
+        return await (0, mongoose_1.connect)(this.connection)
             .then(() => console.log("Connected to MongoDB!"));
     }
     async read(item, limit = 10) {
-        return this.model.find(item, undefined).limit(limit);
+        return this.schema.find(item, undefined).limit(limit);
     }
     async update(id, item) {
-        return this.model.updateOne({ _id: id }, { $set: item });
+        return this.schema.updateOne({ _id: id }, { $set: item });
     }
     async delete(id) {
-        return this.model.deleteOne({ _id: id });
+        return this.schema.deleteOne({ _id: id });
     }
     close() {
         return (0, mongoose_1.disconnect)();

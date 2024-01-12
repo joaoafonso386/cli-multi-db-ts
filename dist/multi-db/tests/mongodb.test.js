@@ -3,11 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongodb_1 = require("./../db/strategies/mongodb");
-const context_1 = require("./../db/strategies/base/context");
-const mocha_1 = require("mocha");
+const dotenv_1 = __importDefault(require("dotenv"));
 const assert_1 = __importDefault(require("assert"));
-const context = new context_1.Context(new mongodb_1.MongoDB());
+const path_1 = __importDefault(require("path"));
+const mongodb_1 = require("../db/strategies/mongodb/mongodb");
+const context_1 = require("./../db/strategies/base/context");
+const schemas_1 = require("../db/strategies/mongodb/schemas");
+const mocha_1 = require("mocha");
+dotenv_1.default.config({ path: path_1.default.join(__dirname, '../..', '.env') });
+const connectionString = process.env.MONGO_CONNECTION_STRING ?? "";
+const context = new context_1.Context(new mongodb_1.MongoDB(connectionString, schemas_1.heroSchema, "Heroes"));
 const HERO_MOCK = {
     name: 'Batman from tests',
     power: 'Night Night'
