@@ -2,9 +2,11 @@ import {  ModelStatic, Sequelize } from "sequelize";
 import { Crud } from "../base/crud";
 import { Hero } from "multi-db/db/types/postgres.types";
 import { HeroReadOptions } from "../../types/types";
+import dotenv from "dotenv"
+import path from "path";
 
 
-
+dotenv.config({ path: path.join(__dirname, '../../../..', '.env') });
 
 export class Postgres extends Crud {
 
@@ -30,9 +32,9 @@ export class Postgres extends Crud {
 
     static async connect() {
        const sequelize = new Sequelize(
-            'heroes',
-            'example',
-            'example',
+            `${process.env.POSTGRES_TABLE}`,
+            `${process.env.POSTGRES_USER}`,
+            `${process.env.POSTGRES_PWD}`,
             {
                 host: 'localhost',
                 dialect: 'postgres',
