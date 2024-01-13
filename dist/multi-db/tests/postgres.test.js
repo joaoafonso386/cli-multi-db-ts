@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const assert_1 = __importDefault(require("assert"));
 const context_1 = require("./../db/strategies/base/context");
-const postgres_1 = require("./../db/strategies/postgres");
+const postgres_1 = require("../db/strategies/postgres/postgres");
 const mocha_1 = require("mocha");
-const context = new context_1.Context(new postgres_1.Postgres());
+const schemas_1 = require("../db/strategies/postgres/schemas");
 const HERO = {
     name: 'Arc',
     power: 'Arrow'
@@ -16,9 +16,13 @@ const HERO_UPDATE = {
     name: 'Batman',
     power: 'Night Shift'
 };
+let context;
+const heroModel = { id: 0, name: "", power: "" };
 (0, mocha_1.describe)('Post Strategy', () => {
     (0, mocha_1.before)(async () => {
-        await context.connect();
+        const connection = await postgres_1.Postgres.connect();
+        const model = await postgres_1.Postgres.defineModel(connection, schemas_1.HeroSchema, heroModel);
+        context = new context_1.Context(new postgres_1.Postgres(connection, model, heroModel));
         await context.delete();
         await context.create(HERO_UPDATE);
     });
