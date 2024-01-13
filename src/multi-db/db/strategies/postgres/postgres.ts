@@ -8,7 +8,7 @@ import { HeroReadOptions } from "../../types/types";
 
 export class Postgres extends Crud {
 
-    constructor(private connection: Sequelize, private schema: ModelStatic<any>, modelType: any) {
+    constructor(private connection: Sequelize, private schema: ModelStatic<any>) {
         super()
     }
 

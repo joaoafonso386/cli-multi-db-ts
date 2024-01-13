@@ -22,7 +22,7 @@ describe('Post Strategy', () => {
     before(async () => {
         const connection = await Postgres.connect()
         const model = await Postgres.defineModel(connection, HeroSchema, heroModel)
-        context = new Context(new Postgres(connection, model, heroModel))
+        context = new Context(new Postgres(connection, model))
         await context.delete()
         await context.create(HERO_UPDATE)
     })
