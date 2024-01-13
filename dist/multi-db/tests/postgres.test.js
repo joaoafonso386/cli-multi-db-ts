@@ -22,7 +22,7 @@ const heroModel = { id: 0, name: "", power: "" };
     (0, mocha_1.before)(async () => {
         const connection = await postgres_1.Postgres.connect();
         const model = await postgres_1.Postgres.defineModel(connection, schemas_1.HeroSchema, heroModel);
-        context = new context_1.Context(new postgres_1.Postgres(connection, model, heroModel));
+        context = new context_1.Context(new postgres_1.Postgres(connection, model));
         await context.delete();
         await context.create(HERO_UPDATE);
     });
