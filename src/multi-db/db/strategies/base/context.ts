@@ -1,5 +1,5 @@
 import { MongoDB } from "../mongodb/mongodb"
-import { Postgres } from "../postgres"
+import { Postgres } from "../postgres/postgres"
 import { Crud } from "./crud"
 import { Hero as PostgresHero } from "multi-db/db/types/postgres.types"
 import { Hero as MongoHero } from "multi-db/db/types/mongo.types"

@@ -1,10 +1,9 @@
 import assert from "assert";
 import { Context } from './../db/strategies/base/context';
-import { Postgres } from './../db/strategies/postgres';
+import { Postgres } from '../db/strategies/postgres/postgres';
 import { before, describe } from "mocha";
-import { Hero } from "multi-db/db/types/postgres.types";
-
-const context = new Context(new Postgres())
+import { Hero, HeroModel } from "../db/types/postgres.types";
+import { HeroSchema } from "../db/strategies/postgres/schemas";
 const HERO = {
     name: 'Arc',
     power: 'Arrow'
@@ -14,10 +13,16 @@ const HERO_UPDATE = {
     power: 'Night Shift'
 }
 
+let context: Context;
+
+const heroModel = { id: 0, name: "", power: ""} as HeroModel
+
 describe('Post Strategy', () => {
 
     before(async () => {
-        await context.connect()
+        const connection = await Postgres.connect()
+        const model = await Postgres.defineModel(connection, HeroSchema, heroModel)
+        context = new Context(new Postgres(connection, model, heroModel))
         await context.delete()
         await context.create(HERO_UPDATE)
     })
