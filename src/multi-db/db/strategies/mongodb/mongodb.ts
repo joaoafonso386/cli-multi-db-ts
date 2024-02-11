@@ -17,13 +17,13 @@ export class MongoDB extends Crud {
     }
 
     async isConnected() {
-        //1 for success connection, 0 for error
+        //0 for success connection, 1 for error
         try {
             await this.connect()
-            return 1
+            return 0
         } catch(e) {
             console.error(e)
-            return 0
+            return 1
         }
     }
 
